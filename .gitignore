@@ -1,0 +1,62 @@
+# ─── SECRETS — never commit ──────────────────────────────────────────────────
+# Every .env anywhere (this catches trading-webapp/.env, which holds a LIVE
+# Anthropic API key). Templates (*.env.example) are allowed.
+.env
+*.env
+**/.env
+!*.env.example
+!**/*.env.example
+trading-webapp/.env
+*.key
+*.pem
+secrets.*
+
+# ─── Data — large and fully regenerable from Dukascopy ───────────────────────
+data/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv
+venv/
+.uv/
+
+# ─── Local runtime state of the FastAPI dev dashboard (not the deployed one) ──
+setup-dashboard/charts/
+setup-dashboard/journal.json
+setup-dashboard/settings.json
+
+# ─── Scratch / experiments ───────────────────────────────────────────────────
+scratch/
+
+# ─── OS / editor / tooling ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Claude Code's dir — not part of your system
+.claude/
+
+# ─── Not part of the deployable system (kept local only) ─────────────────────
+# Research artifacts and separate projects — excluded to keep this a clean
+# "system" repo. They still live on your machine. Leading "/" anchors each to
+# the repo root so it does NOT also match vercel-deploy/public/charts/.
+/charts/
+/review/
+/Forex_2/
+/trading-webapp/
+/trading-system/
+/ACFC_VERDICT.md
+/STRATEGY_SHORTLIST.md
+/TRIALS.md
+
+# NOTE: vercel-deploy/public/ (signals.json + chart PNGs) IS committed on
+# purpose — those are the static site the cron refreshes and Vercel serves.

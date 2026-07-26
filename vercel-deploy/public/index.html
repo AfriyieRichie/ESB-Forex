@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Setup Dashboard</title>
+<style>
+  :root{--surface:#f9f9f7;--panel:#fff;--ink:#0b0b0b;--sec:#52514e;--muted:#898781;
+    --grid:#e1e0d9;--border:rgba(11,11,11,.10);--accent:#2a78d6;--good:#0ca30c;--bad:#d03b3b;--warn:#b4820a;--chip:#f0efec}
+  @media(prefers-color-scheme:dark){:root{--surface:#121211;--panel:#1c1c1b;--ink:#f4f3ee;--sec:#c3c2b7;--muted:#898781;
+    --grid:#2c2c2a;--border:rgba(255,255,255,.12);--accent:#3987e5;--good:#3fbf46;--bad:#e66767;--warn:#e0a52a;--chip:#26261f}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--surface);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.01em}
+  header{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  header h1{font-size:18px}
+  .tag{font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 9px}
+  .spacer{margin-left:auto}
+  label{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  input,select,textarea{background:var(--panel);color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:7px 9px;font:inherit}
+  .mini{width:88px}
+  nav{display:flex;gap:4px}
+  nav button{background:none;border:none;color:var(--sec);font:inherit;font-weight:550;padding:7px 12px;cursor:pointer;border-radius:8px}
+  nav button.on{background:var(--chip);color:var(--ink)}
+  .btn{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:9px 15px;font:inherit;font-weight:600;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--border)}
+  .btn.sm{padding:5px 10px;font-size:13px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:0;height:calc(100vh - 60px)}
+  @media(max-width:820px){.layout{grid-template-columns:1fr;height:auto}}
+  .list{border-right:1px solid var(--border);overflow-y:auto;padding:12px}
+  .detail{overflow-y:auto;padding:20px}
+  .card{border:1px solid var(--border);border-radius:12px;padding:12px 13px;margin-bottom:9px;cursor:pointer;background:var(--panel)}
+  .card:hover{border-color:var(--accent)}
+  .card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .card .top{display:flex;align-items:center;gap:8px}
+  .badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em}
+  .badge.wammie{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+  .badge.moolah{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+  .card .sym{font-weight:650}
+  .card .meta{font-size:12px;color:var(--muted);margin-top:4px;display:flex;gap:10px;flex-wrap:wrap}
+  .chip{font-size:11px;border:1px solid var(--border);border-radius:999px;padding:1px 7px;color:var(--sec)}
+  .empty{color:var(--muted);font-size:14px;padding:20px;text-align:center}
+  .chartwrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel);position:relative;min-height:200px}
+  .chartwrap img{width:100%;display:block}
+  .loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
+  .grid{display:grid;gap:12px}.g5{grid-template-columns:repeat(5,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}
+  @media(max-width:640px){.g5,.g4{grid-template-columns:repeat(2,1fr)}}
+  .tile{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--panel)}
+  .tile .k{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  .tile .v{font-size:18px;font-weight:680;margin-top:2px}
+  .pos{color:var(--good)}.neg{color:var(--bad)}.warnc{color:var(--warn)}
+  .panel{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--panel)}
+  .check{display:flex;gap:9px;align-items:flex-start;padding:7px 0;font-size:14px}
+  .check .ok{color:var(--good);font-weight:700;flex:none}
+  .check input{width:17px;height:17px;margin-top:1px;accent-color:var(--accent);flex:none}
+  .sub{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:2px 0 6px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+  th{font-size:11px;text-transform:uppercase;color:var(--muted)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--border)}
+  .pill.win{color:var(--good);border-color:var(--good)}.pill.loss{color:var(--bad);border-color:var(--bad)}.pill.open{color:var(--sec)}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--surface);
+    padding:10px 16px;border-radius:9px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.show{opacity:1}
+  .scroll{overflow-x:auto}
+  .note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5}
+  /* password gate */
+  #gate{position:fixed;inset:0;background:var(--surface);display:grid;place-items:center;z-index:50}
+  #gate .box{width:min(340px,90vw);text-align:center}
+  #gate h2{font-size:20px;margin-bottom:6px}
+  #gate p{color:var(--muted);font-size:13px;margin:0 0 18px}
+  #gate input{width:100%;text-align:center;padding:11px;font-size:16px;margin-bottom:10px}
+  #gate .btn{width:100%}
+  #gate .err{color:var(--bad);font-size:12px;min-height:16px;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- Password gate. NOT strong security (the data files are still reachable by URL) —
+     it just keeps casual visitors out. For real protection put Cloudflare Access in
+     front of the deployment (free) — see README. To change the password, replace
+     GATE_HASH below with the SHA-256 of your password (README has the one-liner). -->
+<div id="gate">
+  <div class="box">
+    <h2>Setup Dashboard</h2>
+    <p>Enter password to continue</p>
+    <input id="gatepw" type="password" autocomplete="current-password" placeholder="password"/>
+    <button class="btn" id="gatego">Unlock</button>
+    <div class="err" id="gateerr"></div>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+<header>
+  <h1>Setup Dashboard</h1>
+  <span class="tag" id="datatag">loading…</span>
+  <nav><button data-v="signals" class="on">Signals</button><button data-v="journal">Journal</button></nav>
+  <div class="spacer"></div>
+  <label>Equity <input id="equity" class="mini" type="number" step="any"/></label>
+  <label>Risk % <input id="risk" class="mini" type="number" step="any"/></label>
+  <button class="btn ghost sm" id="refresh">Refresh</button>
+</header>
+
+<div id="view-signals" class="layout">
+  <div class="list" id="siglist"></div>
+  <div class="detail" id="detail">
+    <div class="empty">Select a signal on the left — the system draws the setup, its analysis, and the checklist.</div>
+  </div>
+</div>
+
+<div id="view-journal" style="display:none;padding:20px">
+  <div class="grid g5" id="jstats" style="margin-bottom:16px"></div>
+  <div class="panel scroll">
+    <table><thead><tr>
+      <th>Date</th><th>Pair</th><th>Setup</th><th>Dir</th><th class="num">Entry</th><th class="num">Stop</th>
+      <th class="num">Target</th><th class="num">R:R</th><th class="num">Conv</th><th>Status</th><th class="num">R</th><th></th>
+    </tr></thead><tbody id="jbody"></tbody></table>
+    <div class="empty" id="jempty" hidden>No trades logged yet. Take one from a signal.</div>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(n,d=2)=>isFinite(n)?Number(n).toLocaleString(undefined,{maximumFractionDigits:d}):'—';
+
+// ─── password gate ───────────────────────────────────────────────────────────
+// SHA-256 of the password. Default is "changeme" — CHANGE IT (see README).
+const GATE_HASH="057ba03d6c44104863dc7361fe4578965d1887360f90a0895882e58a6248fc86";
+async function sha256(s){
+  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function tryUnlock(){
+  const pw=$('#gatepw').value;
+  if(await sha256(pw)===GATE_HASH){
+    sessionStorage.setItem('setupDash.unlocked','1');
+    $('#gate').style.display='none';$('#app').style.display='block';boot();
+  }else{$('#gateerr').textContent='Wrong password';$('#gatepw').value='';}
+}
+$('#gatego').onclick=tryUnlock;
+$('#gatepw').addEventListener('keydown',e=>{if(e.key==='Enter')tryUnlock()});
+if(sessionStorage.getItem('setupDash.unlocked')==='1'){
+  $('#gate').style.display='none';$('#app').style.display='block';boot();
+}else{$('#gatepw').focus();}
+
+// ─── state (settings + journal live in this browser only) ────────────────────
+const SKEY='setupDash.settings', JKEY='setupDash.journal';
+let settings=JSON.parse(localStorage.getItem(SKEY)||'{"equity":10000,"risk":1}');
+let signals=[], sel=null, meta={};
+const loadJournal=()=>JSON.parse(localStorage.getItem(JKEY)||'[]');
+const saveJournal=j=>localStorage.setItem(JKEY,JSON.stringify(j));
+
+async function boot(){
+  $('#equity').value=settings.equity;$('#risk').value=settings.risk;
+  $('#equity').oninput=$('#risk').oninput=saveSettings;
+  await loadSignals();
+}
+function saveSettings(){
+  settings={equity:parseFloat($('#equity').value)||0,risk:parseFloat($('#risk').value)||0};
+  localStorage.setItem(SKEY,JSON.stringify(settings));
+  if(sel)renderDetail(sel);
+}
+async function loadSignals(){
+  $('#datatag').textContent='loading…';
+  let r;
+  try{ r=await (await fetch('signals.json?t='+Date.now())).json(); }
+  catch(e){ $('#datatag').textContent='no signals.json yet'; signals=[]; renderList(); return; }
+  meta=r; signals=r.signals||[];
+  const through=r.data_through?('data through '+r.data_through.slice(0,10)):(r.latest?('newest setup '+r.latest.slice(0,10)):'no data');
+  const scanned=r.built_at?(' · scanned '+r.built_at.slice(0,16).replace('T',' ')+' UTC'):'';
+  $('#datatag').textContent=through+' · '+signals.length+' setups'+scanned;
+  renderList();
+}
+function renderList(){
+  const el=$('#siglist');el.innerHTML='';
+  if(!signals.length){el.innerHTML='<div class="empty">No setups in the recent window.<br>The scanner runs hourly — check back, or hit Refresh.</div>';return}
+  signals.forEach(s=>{
+    const c=document.createElement('div');c.className='card'+(sel&&sel.id===s.id?' on':'');
+    c.innerHTML=`<div class="top"><span class="badge ${s.setup}">${s.setup}</span>
+      <span class="sym">${s.symbol}</span><span class="chip">${s.direction}</span>
+      <span style="margin-left:auto;font-weight:650">${fmt(s.rr)}R</span></div>
+      <div class="meta"><span>${s.ts.slice(0,10)}</span><span>${s.zone_tier}${s.confluent?' +conf':''}</span>
+      <span>${fmt(s.risk_pips,0)} pip risk</span></div>`;
+    c.onclick=()=>{sel=s;renderList();renderDetail(s)};
+    el.appendChild(c);
+  });
+}
+function size(s){const rd=Math.abs(s.entry-s.stop);return rd>0?(settings.equity*settings.risk/100)/rd:0}
+function renderDetail(s){
+  const risk$=settings.equity*settings.risk/100;
+  const d=$('#detail');
+  d.innerHTML=`
+    <div class="chartwrap"><div class="loading">drawing setup…</div>
+      <img alt="setup chart" onload="this.previousElementSibling&&this.previousElementSibling.remove()"
+        src="charts/${s.id}.png?v=${encodeURIComponent(meta.built_at||'')}"></div>
+    <div class="grid g5" style="margin-top:14px">
+      ${tile('Direction',s.direction.toUpperCase())}${tile('Entry',fmt(s.entry,5))}
+      ${tile('Stop',fmt(s.stop,5))}${tile('Target',fmt(s.target,5))}
+      ${tile('R:R',fmt(s.rr)+' : 1',s.rr<1.5?'warnc':'')}</div>
+    <div class="grid g4" style="margin-top:12px">
+      ${tile('Risk',(settings.risk)+'% = $'+fmt(risk$))}${tile('Stop distance',fmt(s.risk_pips,0)+' pips')}
+      ${tile('Position size',fmt(size(s),4)+' u')}${tile('Zone',s.zone_tier+(s.confluent?' + confluence':''))}</div>
+
+    <div class="grid g2" style="margin-top:16px">
+      <div class="panel">
+        <div class="sub">Verified by the scanner ✓</div>
+        ${(s.verified||[]).map(r=>`<div class="check"><span class="ok">✓</span><span>${r}</span></div>`).join('')}
+      </div>
+      <div class="panel">
+        <div class="sub">Your call — confirm before taking</div>
+        ${(s.discretionary||[]).map((r,i)=>`<label class="check"><input type="checkbox" data-disc="${i}"><span>${r}</span></label>`).join('')}
+        <div style="margin-top:12px" class="grid g2">
+          <label>Conviction 1–5<select id="conv"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+          <div></div>
+        </div>
+        <label style="display:block;margin-top:10px">Note<input id="note" placeholder="why you took (or skipped) it"></label>
+        <button class="btn" id="logbtn" style="margin-top:14px;width:100%">Log this trade</button>
+      </div>
+    </div>
+    <div class="note">Radar, not autopilot — the scanner only verifies the mechanical rules. The drawn setup and
+      your read decide the trade. Setups older than a few bars may already have moved.</div>`;
+  $('#logbtn').onclick=()=>logTrade(s);
+}
+function tile(k,v,cls=''){return `<div class="tile"><div class="k">${k}</div><div class="v ${cls}">${v}</div></div>`}
+
+function logTrade(s){
+  const j=loadJournal();
+  j.unshift({id:'t'+Date.now()+Math.floor(Math.random()*1e4),
+    date:s.ts.slice(0,10),inst:s.symbol,setup:s.setup,dir:s.direction,
+    entry:s.entry,stop:s.stop,target:s.target,rr:s.rr,
+    risk:+(settings.equity*settings.risk/100).toFixed(2),size:+size(s).toFixed(4),
+    conv:parseInt($('#conv').value),note:$('#note').value,
+    discretionary_ok:$$('[data-disc]').filter(c=>c.checked).length,
+    status:'open',r:null});
+  saveJournal(j);
+  toast('Logged '+s.symbol+' '+s.setup+' → Journal');
+}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+
+// nav
+$$('nav button').forEach(b=>b.onclick=()=>{
+  $$('nav button').forEach(x=>x.classList.toggle('on',x===b));
+  $('#view-signals').style.display=b.dataset.v==='signals'?'grid':'none';
+  $('#view-journal').style.display=b.dataset.v==='journal'?'block':'none';
+  if(b.dataset.v==='journal')renderJournal();
+});
+$('#refresh').onclick=()=>loadSignals();
+
+function closeTrade(id,outcome){
+  const j=loadJournal(),t=j.find(x=>x.id===id);if(!t)return;
+  if(outcome==='reopen'){t.status='open';t.r=null;}
+  else{t.status=outcome;t.r=outcome==='win'?t.rr:outcome==='loss'?-1:0;}
+  saveJournal(j);renderJournal();
+}
+function renderJournal(){
+  const j=loadJournal();
+  const closed=j.filter(t=>t.status!=='open'&&t.r!=null),wins=closed.filter(t=>t.r>0);
+  const totalR=closed.reduce((a,t)=>a+t.r,0),exp=closed.length?totalR/closed.length:0;
+  const wr=closed.length?wins.length/closed.length:0;
+  $('#jstats').innerHTML=tile('Logged',j.length)+tile('Closed',closed.length)+
+    tile('Win rate',closed.length?fmt(wr*100,1)+'%':'—')+
+    tile('Expectancy',closed.length?(exp>=0?'+':'')+fmt(exp,3)+'R':'—',exp>0?'pos':exp<0?'neg':'')+
+    tile('Total',(totalR>=0?'+':'')+fmt(totalR,2)+'R',totalR>0?'pos':totalR<0?'neg':'');
+  const b=$('#jbody');b.innerHTML='';$('#jempty').hidden=j.length>0;
+  j.forEach(t=>{
+    const tr=document.createElement('tr');
+    const rc=t.r==null?'—':(t.r>0?'<span class="pos">+'+fmt(t.r,2)+'</span>':'<span class="neg">'+fmt(t.r,2)+'</span>');
+    tr.innerHTML=`<td>${t.date}</td><td>${t.inst}</td><td>${t.setup}</td><td>${t.dir}</td>
+      <td class="num">${fmt(t.entry,5)}</td><td class="num">${fmt(t.stop,5)}</td><td class="num">${fmt(t.target,5)}</td>
+      <td class="num">${fmt(t.rr)}</td><td class="num">${t.conv||'—'}</td>
+      <td><span class="pill ${t.status}">${t.status.toUpperCase()}</span></td><td class="num">${rc}</td><td></td>`;
+    const act=tr.lastChild;
+    if(t.status==='open'){
+      act.innerHTML=`<button class="btn sm" data-o="win">W</button> <button class="btn ghost sm" data-o="loss">L</button> <button class="btn ghost sm" data-o="be">BE</button>`;
+      act.querySelectorAll('button').forEach(btn=>btn.onclick=()=>closeTrade(t.id,btn.dataset.o));
+    }else{
+      act.innerHTML=`<button class="btn ghost sm" data-o="reopen">reopen</button>`;
+      act.querySelector('button').onclick=()=>closeTrade(t.id,'reopen');
+    }
+    b.appendChild(tr);
+  });
+}
+</script>
+</body>
+</html>

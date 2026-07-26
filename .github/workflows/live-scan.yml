@@ -1,0 +1,67 @@
+name: live-scan
+
+# The cron that makes the dashboard "follow the live market": every couple of
+# hours it refreshes free Dukascopy data, runs the checklist detector, fires a
+# Telegram alert for any NEW setup, and commits the refreshed dashboard so Vercel
+# redeploys it. No server to keep awake; the schedule does the work.
+
+on:
+  schedule:
+    # Every 2 hours. H4 bars close every 4h, so this catches them promptly and
+    # stays well inside GitHub's free Actions minutes on a private repo
+    # (~1080 min/month). Change to "20 * * * *" for hourly if you make the repo
+    # public (unlimited minutes) or don't mind the usage.
+    - cron: "20 */2 * * *"
+  workflow_dispatch: {}   # lets you run it by hand from the Actions tab
+
+concurrency:
+  group: live-scan
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # to commit the refreshed signals back to the repo
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv + Python
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      # Dukascopy history is cached on disk and never re-downloaded; only the
+      # current month re-fetches. Persisting data/raw between runs keeps each
+      # run to a handful of requests instead of a full re-download.
+      - name: Cache Dukascopy raw payloads
+        uses: actions/cache@v4
+        with:
+          path: data/raw
+          key: dukascopy-raw-${{ github.run_id }}
+          restore-keys: |
+            dukascopy-raw-
+
+      - name: Install project
+        run: uv sync
+
+      - name: Scan live market, publish, alert
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: uv run python scripts/live_scan.py
+
+      - name: Commit refreshed signals
+        run: |
+          git config user.name "live-scan[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vercel-deploy/public vercel-deploy/seen.json
+          if git diff --cached --quiet; then
+            echo "no change this run"
+          else
+            git commit -m "live-scan: refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi

@@ -1,0 +1,32 @@
+[project]
+name = "fxlab"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "AfriyieRichie", email = "111430715+AfriyieRichie@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.120.0",
+    "ccxt>=4.5.68",
+    "duckdb>=1.5.5",
+    "fastapi>=0.140.0",
+    "matplotlib>=3.11.1",
+    "pandas>=3.0.5",
+    "polars>=1.43.0",
+    "pyarrow>=25.0.0",
+    "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
+    "tzdata>=2026.3",
+    "uvicorn[standard]>=0.51.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

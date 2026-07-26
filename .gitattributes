@@ -1,0 +1,10 @@
+# Normalise all text to LF in the repo (the GitHub Action runs on Linux and
+# executes the committed shell in live-scan.yml — CRLF there would break it).
+* text=auto eol=lf
+
+# Binary assets: never touch line endings.
+*.png binary
+*.jpg binary
+*.parquet binary
+*.bi5 binary
+*.ico binary
