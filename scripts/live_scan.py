@@ -132,15 +132,22 @@ def main() -> None:
     )
     print(f"  published {len(sigs)} setups + charts", flush=True)
 
-    # alert on genuinely new setups
-    seen = set(json.loads(SEEN.read_text())) if SEEN.exists() else set()
+    # Alert on genuinely new setups. A setup is only marked "seen" once it has
+    # actually been alerted (or when alerts are disabled) — so a failed send is
+    # retried next run instead of being silently swallowed. Seen ids are pruned
+    # to the ones still present, keeping the file bounded.
+    current = {s["id"] for s in sigs}
+    seen = (set(json.loads(SEEN.read_text())) if SEEN.exists() else set()) & current
     new = [s for s in sigs if s["id"] not in seen]
     print(f"  {len(new)} new since last run", flush=True)
-    if new and not args.no_alert:
-        for s in new:
-            if send_telegram(format_alert(s)):
-                print(f"    alerted: {s['symbol']} {s['setup']}")
-    SEEN.write_text(json.dumps(sorted({s["id"] for s in sigs})), encoding="utf-8")
+    for s in new:
+        if args.no_alert:
+            seen.add(s["id"])
+        elif send_telegram(format_alert(s)):
+            seen.add(s["id"])
+            print(f"    alerted: {s['symbol']} {s['setup']}")
+        # else: send failed -> leave unseen so it retries next run
+    SEEN.write_text(json.dumps(sorted(seen)), encoding="utf-8")
 
 
 if __name__ == "__main__":
