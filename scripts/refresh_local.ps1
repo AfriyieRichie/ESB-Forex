@@ -10,19 +10,20 @@ $proj = Split-Path -Parent $PSScriptRoot          # scripts/ -> project root
 Set-Location $proj
 $log = Join-Path $PSScriptRoot "refresh_local.log"
 function Log($m) { "$(Get-Date -Format o)  $m" | Out-File -Append -Encoding utf8 $log }
+# Stringify each pipeline item so native stderr (git/uv progress) lands in the log
+# as plain text, instead of PowerShell wrapping every line as a NativeCommandError.
+filter AsText { "$_" }
 
 Log "starting"
 
-# 2>&1 | Out-File keeps native stderr (git/uv progress) as plain log text instead
-# of PowerShell wrapping each line as a NativeCommandError.
-uv run python scripts/live_scan.py 2>&1 | Out-File -Append -Encoding utf8 $log
+uv run python scripts/live_scan.py 2>&1 | AsText | Out-File -Append -Encoding utf8 $log
 if ($LASTEXITCODE -ne 0) { Log "live_scan failed (exit $LASTEXITCODE) - not pushing"; exit 1 }
 
-git add vercel-deploy/public vercel-deploy/seen.json 2>&1 | Out-File -Append -Encoding utf8 $log
+git add vercel-deploy/public vercel-deploy/seen.json 2>&1 | AsText | Out-File -Append -Encoding utf8 $log
 git diff --cached --quiet
 if ($LASTEXITCODE -ne 0) {
-    git commit -q -m "live-scan: local refresh $(Get-Date -Format o)" 2>&1 | Out-File -Append -Encoding utf8 $log
-    git push 2>&1 | Out-File -Append -Encoding utf8 $log
+    git commit -q -m "live-scan: local refresh $(Get-Date -Format o)" 2>&1 | AsText | Out-File -Append -Encoding utf8 $log
+    git push 2>&1 | AsText | Out-File -Append -Encoding utf8 $log
     Log "pushed refresh"
 } else {
     Log "no change this run"
