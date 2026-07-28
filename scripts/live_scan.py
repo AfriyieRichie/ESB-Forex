@@ -33,6 +33,11 @@ import scanner  # noqa: E402
 from fxlab import instruments  # noqa: E402
 from fxlab.data import Client, download_h1, resample, save_bars  # noqa: E402
 from fxlab.data.store import RAW_DIR  # noqa: E402
+from dotenv import load_dotenv  # noqa: E402
+
+# Local runs read the Telegram creds from a gitignored .env; in GitHub Actions
+# the same names come from repo secrets, so this is a no-op there.
+load_dotenv(ROOT / ".env")
 
 PUBLIC = ROOT / "vercel-deploy" / "public"
 CHARTS = PUBLIC / "charts"

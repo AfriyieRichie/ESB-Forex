@@ -34,8 +34,9 @@ setup-dashboard/charts/
 setup-dashboard/journal.json
 setup-dashboard/settings.json
 
-# ─── Scratch / experiments ───────────────────────────────────────────────────
+# ─── Scratch / experiments / logs ────────────────────────────────────────────
 scratch/
+*.log
 
 # ─── OS / editor / tooling ───────────────────────────────────────────────────
 .DS_Store
