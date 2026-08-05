@@ -66,7 +66,9 @@ def refresh_data() -> None:
     """
     today = dt.date.today()
     start = dt.date(today.year - LOOKBACK_YEARS, 1, 1)
-    client = Client(RAW_DIR)
+    # Ticks mean many small requests; a shorter backoff keeps a throttle from
+    # costing 15s a file, and a slightly slower base rate triggers fewer of them.
+    client = Client(RAW_DIR, min_interval=0.5, initial_backoff=5.0)
     for inst in instruments.BASKET:
         candles = download_h1(client, inst, start, today, progress=False)
         gap_start = (

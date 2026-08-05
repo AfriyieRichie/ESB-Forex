@@ -1,6 +1,34 @@
 {
   "signals": [
     {
+      "id": "8182f3bd19",
+      "ts": "2026-08-05T05:00:00+00:00",
+      "symbol": "NZDUSD",
+      "setup": "moolah",
+      "direction": "short",
+      "zone_tier": "secondary",
+      "confluent": false,
+      "entry": 0.58577,
+      "stop": 0.59016,
+      "target": 0.57769,
+      "rr": 1.85,
+      "risk_pips": 43.8,
+      "verified": [
+        "Resistance zone already established (>=2 prior touches)",
+        "Price touched the zone twice",
+        "Second touch is shallower (slightly lower) than the first",
+        "At least 6 candles between the touches",
+        "Bearish reversal candle closed back below the zone",
+        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
+      ],
+      "discretionary": [
+        "Room to the left (the level was abandoned, not grinding)",
+        "Not just ranging into the level",
+        "Reversal candle body is convincing (closed well past the prior body)",
+        "This fits my read of the higher-timeframe context"
+      ]
+    },
+    {
       "id": "5f3d6f6d55",
       "ts": "2026-07-29T17:00:00+00:00",
       "symbol": "USDJPY",
@@ -111,37 +139,9 @@
         "Reversal candle body is convincing (closed well past the prior body)",
         "This fits my read of the higher-timeframe context"
       ]
-    },
-    {
-      "id": "9fb4dd73ae",
-      "ts": "2026-06-16T17:00:00+00:00",
-      "symbol": "EURGBP",
-      "setup": "moolah",
-      "direction": "short",
-      "zone_tier": "secondary",
-      "confluent": true,
-      "entry": 0.86437,
-      "stop": 0.86527,
-      "target": 0.86289,
-      "rr": 1.63,
-      "risk_pips": 9.1,
-      "verified": [
-        "Resistance zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly lower) than the first",
-        "At least 6 candles between the touches",
-        "Bearish reversal candle closed back below the zone",
-        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
     }
   ],
-  "latest": "2026-07-29T17:00:00+00:00",
-  "data_through": "2026-07-31T17:00:00+00:00",
-  "built_at": "2026-08-04T17:55:43.139006+00:00"
+  "latest": "2026-08-05T05:00:00+00:00",
+  "data_through": "2026-08-05T17:00:00+00:00",
+  "built_at": "2026-08-05T23:50:18.391949+00:00"
 }

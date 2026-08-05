@@ -262,7 +262,14 @@ def download_h1_from_ticks(
     frames = []
     day = start
     while day <= end:
+        weekday = day.weekday()  # Mon=0 .. Sat=5, Sun=6
         for hour in range(24):
+            # FX is closed from ~Fri 21:00 UTC to ~Sun 21:00 UTC. Those hours have
+            # no ticks, so skip them rather than paying a throttled request each.
+            if weekday == 5:  # Saturday — closed all day
+                break
+            if weekday == 6 and hour < 20:  # Sunday — before the ~21:00 UTC reopen
+                continue
             slot = dt.datetime(day.year, day.month, day.day, hour, tzinfo=dt.timezone.utc)
             if slot >= current_hour:
                 break
