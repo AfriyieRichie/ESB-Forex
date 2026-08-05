@@ -6,13 +6,15 @@ name: live-scan
 # redeploys it. No server to keep awake; the schedule does the work.
 
 on:
-  schedule:
-    # Every 2 hours. H4 bars close every 4h, so this catches them promptly and
-    # stays well inside GitHub's free Actions minutes on a private repo
-    # (~1080 min/month). Change to "20 * * * *" for hourly if you make the repo
-    # public (unlimited minutes) or don't mind the usage.
-    - cron: "20 */2 * * *"
-  workflow_dispatch: {}   # lets you run it by hand from the Actions tab
+  # The scheduled cloud cron is DISABLED while GitHub Actions is unavailable
+  # (account billing locked — prepaid cards are rejected). Left enabled it just
+  # fails every run and emails a failure notice. The local Windows Scheduled Task
+  # drives the refresh instead. When billing is fixed, un-comment the schedule to
+  # move back to the free cloud cron (every 30 min; repo is public so minutes are
+  # unlimited).
+  # schedule:
+  #   - cron: "*/30 * * * *"
+  workflow_dispatch: {}   # you can still run it by hand from the Actions tab
 
 concurrency:
   group: live-scan
@@ -24,7 +26,7 @@ permissions:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45   # first run backfills the current month's tick files
     steps:
       - uses: actions/checkout@v4
 

@@ -24,6 +24,7 @@ import shutil
 import sys
 from pathlib import Path
 
+import polars as pl
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,7 +32,13 @@ sys.path.insert(0, str(ROOT / "setup-dashboard"))
 import scanner  # noqa: E402
 
 from fxlab import instruments  # noqa: E402
-from fxlab.data import Client, download_h1, resample, save_bars  # noqa: E402
+from fxlab.data import (  # noqa: E402
+    Client,
+    download_h1,
+    download_h1_from_ticks,
+    resample,
+    save_bars,
+)
 from fxlab.data.store import RAW_DIR  # noqa: E402
 from dotenv import load_dotenv  # noqa: E402
 
@@ -43,26 +50,41 @@ PUBLIC = ROOT / "vercel-deploy" / "public"
 CHARTS = PUBLIC / "charts"
 SEEN = ROOT / "vercel-deploy" / "seen.json"
 LOOKBACK_YEARS = 2
+# Only alert on setups whose trigger bar closed this recently — keeps alerts to
+# freshly-formed, still-actionable setups (not anything in the display window).
+ALERT_MAX_AGE_HOURS = float(os.getenv("ALERT_MAX_AGE_HOURS", "9"))
 
 
 def refresh_data() -> None:
-    """Top up the live edge from free Dukascopy data.
+    """Refresh bars: monthly candle files for history, live tick files for the edge.
 
-    History months are cached on disk and never re-fetched. The current and
-    previous month DO keep filling in as bars close, so we drop just those two
-    from the cache to force a fresh pull — the rest stays cached, so this is a
-    handful of requests, not a full re-download.
+    The current month's monthly candle file is not published until the month is
+    aggregated, so on its own the data lags by up to a month. History months come
+    from the (cached) candle files; the current month is filled from Dukascopy tick
+    files, which publish in near-real-time. That tick edge is what makes the signals
+    real-time. Completed tick hours are cached, so only new hours are fetched.
     """
     today = dt.date.today()
     start = dt.date(today.year - LOOKBACK_YEARS, 1, 1)
-    prev = (today.replace(day=1) - dt.timedelta(days=1))  # last day of prev month
     client = Client(RAW_DIR)
     for inst in instruments.BASKET:
-        for d in (today, prev):
-            edge = RAW_DIR / inst.symbol / str(d.year) / f"{d.month:02d}_hour.bi5"
-            if edge.exists():
-                edge.unlink()
-        h1 = download_h1(client, inst, start, today, progress=False)
+        candles = download_h1(client, inst, start, today, progress=False)
+        gap_start = (
+            candles["ts_open"].max().date() + dt.timedelta(days=1)
+            if not candles.is_empty()
+            else start
+        )
+        ticks = download_h1_from_ticks(client, inst, gap_start, today, progress=False)
+        if ticks.is_empty():
+            h1 = candles
+        elif candles.is_empty():
+            h1 = ticks
+        else:
+            h1 = (
+                pl.concat([candles, ticks])
+                .sort("ts_open")
+                .unique(subset="ts_open", keep="last")
+            )
         if h1.is_empty():
             continue
         save_bars(h1, inst.symbol, "H1")
@@ -140,12 +162,19 @@ def main() -> None:
     seen = (set(json.loads(SEEN.read_text())) if SEEN.exists() else set()) & current
     new = [s for s in sigs if s["id"] not in seen]
     print(f"  {len(new)} new since last run", flush=True)
+    now = dt.datetime.now(dt.timezone.utc)
     for s in new:
+        age_h = (now - dt.datetime.fromisoformat(s["ts"])).total_seconds() / 3600
         if args.no_alert:
             seen.add(s["id"])
+        elif age_h > ALERT_MAX_AGE_HOURS:
+            # Detected, but its trigger bar is too old to still be actionable —
+            # acknowledge it (so it isn't reconsidered) without pinging.
+            seen.add(s["id"])
+            print(f"    skip (stale {age_h:.0f}h): {s['symbol']} {s['setup']}", flush=True)
         elif send_telegram(format_alert(s)):
             seen.add(s["id"])
-            print(f"    alerted: {s['symbol']} {s['setup']}")
+            print(f"    alerted: {s['symbol']} {s['setup']} ({age_h:.1f}h old)")
         # else: send failed -> leave unseen so it retries next run
     SEEN.write_text(json.dumps(sorted(seen)), encoding="utf-8")
 
