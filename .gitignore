@@ -12,7 +12,9 @@ trading-webapp/.env
 secrets.*
 
 # ─── Data — large and fully regenerable from Dukascopy ───────────────────────
-data/
+# Leading "/" anchors to the repo root so it does NOT also match src/fxlab/data/
+# (the data module) or any other nested "data" directory.
+/data/
 
 # Python-generated files
 __pycache__/
