@@ -73,7 +73,7 @@
       "target": 1.34498,
       "rr": 1.83,
       "risk_pips": 85.0,
-      "price_now": 1.35247,
+      "price_now": 1.35088,
       "status": "triggered",
       "verified": [
         "Support zone already established (>=2 prior touches)",
@@ -133,7 +133,7 @@
       "target": 1.347,
       "rr": 1.62,
       "risk_pips": 118.9,
-      "price_now": 1.35247,
+      "price_now": 1.35088,
       "status": "triggered",
       "verified": [
         "Support zone already established (>=2 prior touches)",
@@ -153,5 +153,5 @@
   ],
   "latest": "2026-08-05T05:00:00+00:00",
   "data_through": "2026-08-12T09:00:00+00:00",
-  "built_at": "2026-08-12T15:05:32.712365+00:00"
+  "built_at": "2026-08-12T15:24:41.171446+00:00"
 }
