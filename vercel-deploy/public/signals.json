@@ -1,6 +1,36 @@
 {
   "signals": [
     {
+      "id": "5f1d4c8bcd",
+      "ts": "2026-09-01T01:00:00+00:00",
+      "symbol": "EURGBP",
+      "setup": "moolah",
+      "direction": "short",
+      "zone_tier": "primary",
+      "confluent": true,
+      "entry": 0.85683,
+      "stop": 0.85795,
+      "target": 0.85468,
+      "rr": 1.92,
+      "risk_pips": 11.2,
+      "price_now": 0.85818,
+      "status": "invalidated",
+      "verified": [
+        "Resistance zone already established (>=2 prior touches)",
+        "Price touched the zone twice",
+        "Second touch is shallower (slightly lower) than the first",
+        "At least 6 candles between the touches",
+        "Bearish reversal candle closed back below the zone",
+        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
+      ],
+      "discretionary": [
+        "Room to the left (the level was abandoned, not grinding)",
+        "Not just ranging into the level",
+        "Reversal candle body is convincing (closed well past the prior body)",
+        "This fits my read of the higher-timeframe context"
+      ]
+    },
+    {
       "id": "8182f3bd19",
       "ts": "2026-08-05T05:00:00+00:00",
       "symbol": "NZDUSD",
@@ -13,8 +43,8 @@
       "target": 0.57769,
       "rr": 1.85,
       "risk_pips": 43.8,
-      "price_now": 0.59072,
-      "status": "invalidated",
+      "price_now": 0.58058,
+      "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -43,7 +73,7 @@
       "target": 161.911,
       "rr": 1.69,
       "risk_pips": 76.7,
-      "price_now": 160.009,
+      "price_now": 159.858,
       "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -59,99 +89,9 @@
         "Reversal candle body is convincing (closed well past the prior body)",
         "This fits my read of the higher-timeframe context"
       ]
-    },
-    {
-      "id": "4eec2af23e",
-      "ts": "2026-07-01T13:00:00+00:00",
-      "symbol": "GBPUSD",
-      "setup": "wammie",
-      "direction": "long",
-      "zone_tier": "primary",
-      "confluent": true,
-      "entry": 1.32945,
-      "stop": 1.32095,
-      "target": 1.34498,
-      "rr": 1.83,
-      "risk_pips": 85.0,
-      "price_now": 1.35335,
-      "status": "triggered",
-      "verified": [
-        "Support zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly higher) than the first",
-        "At least 6 candles between the touches",
-        "Bullish reversal candle closed back above the zone",
-        "Entry above the trigger, stop below the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
-    },
-    {
-      "id": "61a3e0c69c",
-      "ts": "2026-06-22T21:00:00+00:00",
-      "symbol": "EURJPY",
-      "setup": "wammie",
-      "direction": "long",
-      "zone_tier": "secondary",
-      "confluent": true,
-      "entry": 184.754,
-      "stop": 184.244,
-      "target": 185.731,
-      "rr": 1.92,
-      "risk_pips": 50.9,
-      "price_now": 185.402,
-      "status": "triggered",
-      "verified": [
-        "Support zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly higher) than the first",
-        "At least 6 candles between the touches",
-        "Bullish reversal candle closed back above the zone",
-        "Entry above the trigger, stop below the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
-    },
-    {
-      "id": "3011287640",
-      "ts": "2026-06-22T09:00:00+00:00",
-      "symbol": "GBPUSD",
-      "setup": "wammie",
-      "direction": "long",
-      "zone_tier": "primary",
-      "confluent": true,
-      "entry": 1.32772,
-      "stop": 1.31584,
-      "target": 1.347,
-      "rr": 1.62,
-      "risk_pips": 118.9,
-      "price_now": 1.35335,
-      "status": "triggered",
-      "verified": [
-        "Support zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly higher) than the first",
-        "At least 6 candles between the touches",
-        "Bullish reversal candle closed back above the zone",
-        "Entry above the trigger, stop below the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
     }
   ],
-  "latest": "2026-08-05T05:00:00+00:00",
-  "data_through": "2026-08-28T17:00:00+00:00",
-  "built_at": "2026-08-30T20:52:59.133307+00:00"
+  "latest": "2026-09-01T01:00:00+00:00",
+  "data_through": "2026-09-02T05:00:00+00:00",
+  "built_at": "2026-09-02T11:11:48.052364+00:00"
 }
