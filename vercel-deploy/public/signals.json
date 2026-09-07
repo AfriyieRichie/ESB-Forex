@@ -73,7 +73,7 @@
       "target": 161.911,
       "rr": 1.69,
       "risk_pips": 76.7,
-      "price_now": 156.204,
+      "price_now": 155.887,
       "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -93,5 +93,5 @@
   ],
   "latest": "2026-09-01T01:00:00+00:00",
   "data_through": "2026-09-06T21:00:00+00:00",
-  "built_at": "2026-09-07T01:09:20.232254+00:00"
+  "built_at": "2026-09-07T01:24:30.202134+00:00"
 }
