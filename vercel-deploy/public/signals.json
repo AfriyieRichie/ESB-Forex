@@ -1,6 +1,36 @@
 {
   "signals": [
     {
+      "id": "7a0398f765",
+      "ts": "2026-09-08T09:00:00+00:00",
+      "symbol": "USDCHF",
+      "setup": "moolah",
+      "direction": "short",
+      "zone_tier": "primary",
+      "confluent": true,
+      "entry": 0.80973,
+      "stop": 0.81282,
+      "target": 0.80398,
+      "rr": 1.86,
+      "risk_pips": 30.9,
+      "price_now": 0.80992,
+      "status": "live",
+      "verified": [
+        "Resistance zone already established (>=2 prior touches)",
+        "Price touched the zone twice",
+        "Second touch is shallower (slightly lower) than the first",
+        "At least 6 candles between the touches",
+        "Bearish reversal candle closed back below the zone",
+        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
+      ],
+      "discretionary": [
+        "Room to the left (the level was abandoned, not grinding)",
+        "Not just ranging into the level",
+        "Reversal candle body is convincing (closed well past the prior body)",
+        "This fits my read of the higher-timeframe context"
+      ]
+    },
+    {
       "id": "5f1d4c8bcd",
       "ts": "2026-09-01T01:00:00+00:00",
       "symbol": "EURGBP",
@@ -13,7 +43,7 @@
       "target": 0.85468,
       "rr": 1.92,
       "risk_pips": 11.2,
-      "price_now": 0.85931,
+      "price_now": 0.85859,
       "status": "invalidated",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -43,8 +73,8 @@
       "target": 0.57769,
       "rr": 1.85,
       "risk_pips": 43.8,
-      "price_now": 0.58796,
-      "status": "live",
+      "price_now": 0.58435,
+      "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -73,7 +103,7 @@
       "target": 161.911,
       "rr": 1.69,
       "risk_pips": 76.7,
-      "price_now": 155.887,
+      "price_now": 153.536,
       "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -91,7 +121,7 @@
       ]
     }
   ],
-  "latest": "2026-09-01T01:00:00+00:00",
-  "data_through": "2026-09-06T21:00:00+00:00",
-  "built_at": "2026-09-07T01:54:07.574600+00:00"
+  "latest": "2026-09-08T09:00:00+00:00",
+  "data_through": "2026-09-09T17:00:00+00:00",
+  "built_at": "2026-09-10T00:58:21.163716+00:00"
 }
