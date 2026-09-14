@@ -13,8 +13,8 @@
       "target": 0.80398,
       "rr": 1.86,
       "risk_pips": 30.9,
-      "price_now": 0.80992,
-      "status": "live",
+      "price_now": 0.81684,
+      "status": "invalidated",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -43,8 +43,8 @@
       "target": 0.85468,
       "rr": 1.92,
       "risk_pips": 11.2,
-      "price_now": 0.85859,
-      "status": "invalidated",
+      "price_now": 0.85567,
+      "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -73,7 +73,7 @@
       "target": 0.57769,
       "rr": 1.85,
       "risk_pips": 43.8,
-      "price_now": 0.58435,
+      "price_now": 0.57773,
       "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -103,7 +103,7 @@
       "target": 161.911,
       "rr": 1.69,
       "risk_pips": 76.7,
-      "price_now": 153.536,
+      "price_now": 154.323,
       "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -122,6 +122,6 @@
     }
   ],
   "latest": "2026-09-08T09:00:00+00:00",
-  "data_through": "2026-09-09T17:00:00+00:00",
-  "built_at": "2026-09-10T00:58:21.163716+00:00"
+  "data_through": "2026-09-14T17:00:00+00:00",
+  "built_at": "2026-09-14T23:00:07.761260+00:00"
 }
