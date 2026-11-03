@@ -1,6 +1,36 @@
 {
   "signals": [
     {
+      "id": "18e748a189",
+      "ts": "2026-10-29T09:00:00+00:00",
+      "symbol": "EURJPY",
+      "setup": "wammie",
+      "direction": "long",
+      "zone_tier": "primary",
+      "confluent": false,
+      "entry": 176.226,
+      "stop": 175.366,
+      "target": 177.796,
+      "rr": 1.82,
+      "risk_pips": 86.1,
+      "price_now": 177.598,
+      "status": "triggered",
+      "verified": [
+        "Support zone already established (>=2 prior touches)",
+        "Price touched the zone twice",
+        "Second touch is shallower (slightly higher) than the first",
+        "At least 6 candles between the touches",
+        "Bullish reversal candle closed back above the zone",
+        "Entry above the trigger, stop below the first touch, target the next zone (>=1.5R)"
+      ],
+      "discretionary": [
+        "Room to the left (the level was abandoned, not grinding)",
+        "Not just ranging into the level",
+        "Reversal candle body is convincing (closed well past the prior body)",
+        "This fits my read of the higher-timeframe context"
+      ]
+    },
+    {
       "id": "471550571d",
       "ts": "2026-10-08T13:00:00+00:00",
       "symbol": "USDJPY",
@@ -13,8 +43,8 @@
       "target": 156.903,
       "rr": 1.97,
       "risk_pips": 53.4,
-      "price_now": 157.526,
-      "status": "triggered",
+      "price_now": 158.638,
+      "status": "invalidated",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -43,67 +73,7 @@
       "target": 178.234,
       "rr": 1.83,
       "risk_pips": 38.9,
-      "price_now": 176.077,
-      "status": "triggered",
-      "verified": [
-        "Resistance zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly lower) than the first",
-        "At least 6 candles between the touches",
-        "Bearish reversal candle closed back below the zone",
-        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
-    },
-    {
-      "id": "7a0398f765",
-      "ts": "2026-09-08T09:00:00+00:00",
-      "symbol": "USDCHF",
-      "setup": "moolah",
-      "direction": "short",
-      "zone_tier": "primary",
-      "confluent": true,
-      "entry": 0.80973,
-      "stop": 0.81282,
-      "target": 0.80398,
-      "rr": 1.86,
-      "risk_pips": 30.9,
-      "price_now": 0.82757,
-      "status": "invalidated",
-      "verified": [
-        "Resistance zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly lower) than the first",
-        "At least 6 candles between the touches",
-        "Bearish reversal candle closed back below the zone",
-        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
-    },
-    {
-      "id": "5f1d4c8bcd",
-      "ts": "2026-09-01T01:00:00+00:00",
-      "symbol": "EURGBP",
-      "setup": "moolah",
-      "direction": "short",
-      "zone_tier": "primary",
-      "confluent": true,
-      "entry": 0.85683,
-      "stop": 0.85795,
-      "target": 0.85468,
-      "rr": 1.92,
-      "risk_pips": 11.2,
-      "price_now": 0.83726,
+      "price_now": 177.598,
       "status": "triggered",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
@@ -121,7 +91,7 @@
       ]
     }
   ],
-  "latest": "2026-10-08T13:00:00+00:00",
-  "data_through": "2026-10-26T17:00:00+00:00",
-  "built_at": "2026-10-26T21:09:29.935790+00:00"
+  "latest": "2026-10-29T09:00:00+00:00",
+  "data_through": "2026-11-03T14:00:00+00:00",
+  "built_at": "2026-11-03T19:28:26.840291+00:00"
 }
