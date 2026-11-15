@@ -1,6 +1,36 @@
 {
   "signals": [
     {
+      "id": "8105f495d0",
+      "ts": "2026-11-10T18:00:00+00:00",
+      "symbol": "EURUSD",
+      "setup": "wammie",
+      "direction": "long",
+      "zone_tier": "primary",
+      "confluent": true,
+      "entry": 1.11699,
+      "stop": 1.11283,
+      "target": 1.12331,
+      "rr": 1.52,
+      "risk_pips": 41.5,
+      "price_now": 1.10235,
+      "status": "invalidated",
+      "verified": [
+        "Support zone already established (>=2 prior touches)",
+        "Price touched the zone twice",
+        "Second touch is shallower (slightly higher) than the first",
+        "At least 6 candles between the touches",
+        "Bullish reversal candle closed back above the zone",
+        "Entry above the trigger, stop below the first touch, target the next zone (>=1.5R)"
+      ],
+      "discretionary": [
+        "Room to the left (the level was abandoned, not grinding)",
+        "Not just ranging into the level",
+        "Reversal candle body is convincing (closed well past the prior body)",
+        "This fits my read of the higher-timeframe context"
+      ]
+    },
+    {
       "id": "18e748a189",
       "ts": "2026-10-29T09:00:00+00:00",
       "symbol": "EURJPY",
@@ -13,8 +43,8 @@
       "target": 177.796,
       "rr": 1.82,
       "risk_pips": 86.1,
-      "price_now": 177.045,
-      "status": "triggered",
+      "price_now": 176.023,
+      "status": "live",
       "verified": [
         "Support zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -43,38 +73,8 @@
       "target": 156.903,
       "rr": 1.97,
       "risk_pips": 53.4,
-      "price_now": 157.814,
-      "status": "triggered",
-      "verified": [
-        "Resistance zone already established (>=2 prior touches)",
-        "Price touched the zone twice",
-        "Second touch is shallower (slightly lower) than the first",
-        "At least 6 candles between the touches",
-        "Bearish reversal candle closed back below the zone",
-        "Entry below the trigger, stop above the first touch, target the next zone (>=1.5R)"
-      ],
-      "discretionary": [
-        "Room to the left (the level was abandoned, not grinding)",
-        "Not just ranging into the level",
-        "Reversal candle body is convincing (closed well past the prior body)",
-        "This fits my read of the higher-timeframe context"
-      ]
-    },
-    {
-      "id": "0547df724a",
-      "ts": "2026-09-17T17:00:00+00:00",
-      "symbol": "EURJPY",
-      "setup": "moolah",
-      "direction": "short",
-      "zone_tier": "secondary",
-      "confluent": false,
-      "entry": 178.947,
-      "stop": 179.335,
-      "target": 178.234,
-      "rr": 1.83,
-      "risk_pips": 38.9,
-      "price_now": 177.045,
-      "status": "triggered",
+      "price_now": 159.669,
+      "status": "invalidated",
       "verified": [
         "Resistance zone already established (>=2 prior touches)",
         "Price touched the zone twice",
@@ -91,7 +91,7 @@
       ]
     }
   ],
-  "latest": "2026-10-29T09:00:00+00:00",
-  "data_through": "2026-11-05T14:00:00+00:00",
-  "built_at": "2026-11-05T21:29:21.813568+00:00"
+  "latest": "2026-11-10T18:00:00+00:00",
+  "data_through": "2026-11-13T18:00:00+00:00",
+  "built_at": "2026-11-15T23:38:17.343468+00:00"
 }
